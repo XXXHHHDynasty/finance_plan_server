@@ -1,0 +1,109 @@
+USE finance_plan_db;
+
+
+DROP TABLE IF EXISTS `family_member`;
+DROP TABLE IF EXISTS `income`;
+DROP TABLE IF EXISTS `debt`;
+DROP TABLE IF EXISTS `expense`;
+DROP TABLE IF EXISTS `asset`;
+DROP TABLE IF EXISTS `goal`;
+DROP TABLE IF EXISTS `users`;
+
+
+/* Users table */
+ CREATE TABLE `users` (
+  `UID` varchar(100) NOT NULL DEFAULT '',
+  `username` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `nickname` varchar(100) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `YOB` int DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+/* Family Members table */
+ CREATE TABLE `family_member` (
+  `UID` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `YOB` int DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_fm` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+/* Income table */
+ CREATE TABLE `income` (
+  `UID` varchar(45) NOT NULL,
+  `source` varchar(45) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `frequency` varchar(45) DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_income` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/* debt table */
+ CREATE TABLE `debt` (
+  `UID` varchar(45) NOT NULL,
+  `source` varchar(45) NOT NULL,
+  `total_debt` float DEFAULT NULL,
+  `interest_rate` float DEFAULT NULL,
+  `monthly_payment` float DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_debt` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/* Expense table */
+ CREATE TABLE `expense` (
+  `UID` varchar(45) NOT NULL,
+  `source` varchar(45) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_expense` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/* Asset table */
+ CREATE TABLE `asset` (
+  `UID` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_asset` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/* Goal table */
+ CREATE TABLE `goal` (
+  `UID` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `amount` float DEFAULT NULL,
+  `goal_year` int DEFAULT NULL,
+  `user` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`UID`),
+  UNIQUE KEY `UID_UNIQUE` (`UID`),
+  KEY `user_idx` (`user`),
+  CONSTRAINT `user_goal` FOREIGN KEY (`user`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
