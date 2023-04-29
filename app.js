@@ -8,6 +8,8 @@ const cors = require('cors')
 // Register CORS as a global middleware
 app.use(cors())
 
+app.use(express.json())
+
 // Configure middleware for parsing form data
 // Can only parse data in the application/x-www-form-urlencoded format
 app.use(express.urlencoded({ extended: false }))
