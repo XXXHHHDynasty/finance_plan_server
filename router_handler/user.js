@@ -42,18 +42,18 @@ exports.login = (req, res) => {
     const userinfo = req.body
 
     const sql = `select * from users where username=?`
-    db.query(sql, userinfo.username, (err, results) => {
+    db.query(sql, [userinfo.username], (err, results) => {
         if (err)
             return res.cc(err)
 
         if (results.length !== 1)
-            return res.cc('Login failed!')
+            return res.cc('Login Failed')
 
         // const compareResult = bcrypt.compareSync(userinfo.password, results[0].password)
         // if (!compareResult)
         //     return res.cc('Login failed!')
         if (userinfo.password != results[0].password)
-            return res.cc('Login failed!')
+            return res.cc('Password does not match!')
 
         // Generate a token string on the server side
         // Exclude password and user_pic
